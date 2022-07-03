@@ -8,21 +8,21 @@ import (
 	"github.com/thenalab/tsc/testutil/sample"
 )
 
-func TestMsgCreatePost_ValidateBasic(t *testing.T) {
+func TestMsgCreateNFT_ValidateBasic(t *testing.T) {
 	tests := []struct {
 		name string
-		msg  MsgCreatePost
+		msg  MsgCreateNFT
 		err  error
 	}{
 		{
 			name: "invalid address",
-			msg: MsgCreatePost{
+			msg: MsgCreateNFT{
 				Creator: "invalid_address",
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid address",
-			msg: MsgCreatePost{
+			msg: MsgCreateNFT{
 				Creator: sample.AccAddress(),
 			},
 		},
