@@ -3,46 +3,32 @@ import { Reader, Writer } from "protobufjs/minimal";
 
 export const protobufPackage = "thenalab.tsc.tsc";
 
-export interface MsgCreatePost {
+export interface MsgCreateNFT {
   creator: string;
-  title: string;
-  body: string;
 }
 
-export interface MsgCreatePostResponse {}
+export interface MsgCreateNFTResponse {}
 
-const baseMsgCreatePost: object = { creator: "", title: "", body: "" };
+const baseMsgCreateNFT: object = { creator: "" };
 
-export const MsgCreatePost = {
-  encode(message: MsgCreatePost, writer: Writer = Writer.create()): Writer {
+export const MsgCreateNFT = {
+  encode(message: MsgCreateNFT, writer: Writer = Writer.create()): Writer {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
-    }
-    if (message.title !== "") {
-      writer.uint32(18).string(message.title);
-    }
-    if (message.body !== "") {
-      writer.uint32(26).string(message.body);
     }
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgCreatePost {
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateNFT {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgCreatePost } as MsgCreatePost;
+    const message = { ...baseMsgCreateNFT } as MsgCreateNFT;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
           message.creator = reader.string();
           break;
-        case 2:
-          message.title = reader.string();
-          break;
-        case 3:
-          message.body = reader.string();
-          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -51,66 +37,44 @@ export const MsgCreatePost = {
     return message;
   },
 
-  fromJSON(object: any): MsgCreatePost {
-    const message = { ...baseMsgCreatePost } as MsgCreatePost;
+  fromJSON(object: any): MsgCreateNFT {
+    const message = { ...baseMsgCreateNFT } as MsgCreateNFT;
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = String(object.creator);
     } else {
       message.creator = "";
     }
-    if (object.title !== undefined && object.title !== null) {
-      message.title = String(object.title);
-    } else {
-      message.title = "";
-    }
-    if (object.body !== undefined && object.body !== null) {
-      message.body = String(object.body);
-    } else {
-      message.body = "";
-    }
     return message;
   },
 
-  toJSON(message: MsgCreatePost): unknown {
+  toJSON(message: MsgCreateNFT): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
-    message.title !== undefined && (obj.title = message.title);
-    message.body !== undefined && (obj.body = message.body);
     return obj;
   },
 
-  fromPartial(object: DeepPartial<MsgCreatePost>): MsgCreatePost {
-    const message = { ...baseMsgCreatePost } as MsgCreatePost;
+  fromPartial(object: DeepPartial<MsgCreateNFT>): MsgCreateNFT {
+    const message = { ...baseMsgCreateNFT } as MsgCreateNFT;
     if (object.creator !== undefined && object.creator !== null) {
       message.creator = object.creator;
     } else {
       message.creator = "";
     }
-    if (object.title !== undefined && object.title !== null) {
-      message.title = object.title;
-    } else {
-      message.title = "";
-    }
-    if (object.body !== undefined && object.body !== null) {
-      message.body = object.body;
-    } else {
-      message.body = "";
-    }
     return message;
   },
 };
 
-const baseMsgCreatePostResponse: object = {};
+const baseMsgCreateNFTResponse: object = {};
 
-export const MsgCreatePostResponse = {
-  encode(_: MsgCreatePostResponse, writer: Writer = Writer.create()): Writer {
+export const MsgCreateNFTResponse = {
+  encode(_: MsgCreateNFTResponse, writer: Writer = Writer.create()): Writer {
     return writer;
   },
 
-  decode(input: Reader | Uint8Array, length?: number): MsgCreatePostResponse {
+  decode(input: Reader | Uint8Array, length?: number): MsgCreateNFTResponse {
     const reader = input instanceof Uint8Array ? new Reader(input) : input;
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = { ...baseMsgCreatePostResponse } as MsgCreatePostResponse;
+    const message = { ...baseMsgCreateNFTResponse } as MsgCreateNFTResponse;
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -122,18 +86,18 @@ export const MsgCreatePostResponse = {
     return message;
   },
 
-  fromJSON(_: any): MsgCreatePostResponse {
-    const message = { ...baseMsgCreatePostResponse } as MsgCreatePostResponse;
+  fromJSON(_: any): MsgCreateNFTResponse {
+    const message = { ...baseMsgCreateNFTResponse } as MsgCreateNFTResponse;
     return message;
   },
 
-  toJSON(_: MsgCreatePostResponse): unknown {
+  toJSON(_: MsgCreateNFTResponse): unknown {
     const obj: any = {};
     return obj;
   },
 
-  fromPartial(_: DeepPartial<MsgCreatePostResponse>): MsgCreatePostResponse {
-    const message = { ...baseMsgCreatePostResponse } as MsgCreatePostResponse;
+  fromPartial(_: DeepPartial<MsgCreateNFTResponse>): MsgCreateNFTResponse {
+    const message = { ...baseMsgCreateNFTResponse } as MsgCreateNFTResponse;
     return message;
   },
 };
@@ -141,7 +105,7 @@ export const MsgCreatePostResponse = {
 /** Msg defines the Msg service. */
 export interface Msg {
   /** this line is used by starport scaffolding # proto/tx/rpc */
-  CreatePost(request: MsgCreatePost): Promise<MsgCreatePostResponse>;
+  CreateNFT(request: MsgCreateNFT): Promise<MsgCreateNFTResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -149,15 +113,11 @@ export class MsgClientImpl implements Msg {
   constructor(rpc: Rpc) {
     this.rpc = rpc;
   }
-  CreatePost(request: MsgCreatePost): Promise<MsgCreatePostResponse> {
-    const data = MsgCreatePost.encode(request).finish();
-    const promise = this.rpc.request(
-      "thenalab.tsc.tsc.Msg",
-      "CreatePost",
-      data
-    );
+  CreateNFT(request: MsgCreateNFT): Promise<MsgCreateNFTResponse> {
+    const data = MsgCreateNFT.encode(request).finish();
+    const promise = this.rpc.request("thenalab.tsc.tsc.Msg", "CreateNFT", data);
     return promise.then((data) =>
-      MsgCreatePostResponse.decode(new Reader(data))
+      MsgCreateNFTResponse.decode(new Reader(data))
     );
   }
 }

@@ -7,17 +7,16 @@ option go_package = "github.com/thenalab/tsc/x/tsc/types";
 
 // Msg defines the Msg service.
 service Msg {
-      rpc CreatePost(MsgCreatePost) returns (MsgCreatePostResponse);
+
+  rpc CreateNFT(MsgCreateNFT) returns (MsgCreateNFTResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
-message MsgCreatePost {
+message MsgCreateNFT {
   string creator = 1;
-  string title = 2;
-  string body = 3;
 }
 
-message MsgCreatePostResponse {
+message MsgCreateNFTResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message
